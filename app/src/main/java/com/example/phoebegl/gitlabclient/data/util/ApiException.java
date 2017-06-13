@@ -1,4 +1,4 @@
-package com.example.phoebegl.gitlabclient.data.api;
+package com.example.phoebegl.gitlabclient.data.util;
 
 /**
  * Created by phoebegl on 2017/6/11.
@@ -8,8 +8,9 @@ public class ApiException extends Exception {
     private int code;
     private String message;
 
-    public ApiException(Throwable throwable,String message) {
+    public ApiException(Throwable throwable,int code,String message) {
         super(throwable);
+        this.code = code;
         this.message = message;
     }
 

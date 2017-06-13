@@ -1,4 +1,4 @@
-package com.example.phoebegl.gitlabclient.data;
+package com.example.phoebegl.gitlabclient.data.util;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -40,3 +40,4 @@ public class RetrofitWrapper {
     }
 
 }
+
