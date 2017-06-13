@@ -34,7 +34,7 @@ dependencies {
     provided 'org.glassfish:javax.annotation:10.0-b28'
 
     compile 'com.jakewharton:butterknife:8.6.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
+    apt 'com.jakewharton:butterknife-compiler:8.6.0'
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.3.0'
     compile 'com.google.code.gson:gson:2.8.1'
@@ -42,4 +42,8 @@ dependencies {
 
     compile 'io.reactivex:rxjava:1.1.0'
     compile 'io.reactivex:rxandroid:1.1.0'
+
+    //fragment框架
+    compile 'me.yokeyword:fragmentation:0.10.7'
+    compile 'com.github.dmytrodanylyk.android-process-button:library:1.0.4'
 }

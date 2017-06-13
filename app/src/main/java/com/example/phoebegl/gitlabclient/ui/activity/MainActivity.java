@@ -17,6 +17,9 @@ import java.io.IOException;
 import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Response;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity{
     Button btn;
@@ -27,14 +30,11 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        btn = (Button)findViewById(R.id.btn_click);
-        tv_result = (TextView)findViewById(R.id.tv_result);
+        btn = (Button)findViewById(R.id.btn_login);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ApiService service = RetrofitWrapper.getInstance().create(ApiService.class);
-                Call<UserInfo> call = service.login(new Account("liuqin","123"));
-                new UserTask().execute(call);
+                login("liuqin","123");
             }
         });
     }
@@ -49,22 +49,46 @@ public class MainActivity extends AppCompatActivity{
         super.onStop();
     }
 
-    class UserTask extends AsyncTask<Call,Void,String> {
-        @Override
-        protected String doInBackground(Call... params) {
-            Call<UserInfo> call = params[0];
-            try {
-                Response<UserInfo> response = call.execute();
-                return response.body().getEmail();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
+    public void login(final String username, String password) {
+        Account account = new Account(username,password);
+        ApiService service = RetrofitWrapper.getInstance().create(ApiService.class);
+        service.login(account)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<UserInfo>() {
+                    @Override
+                    public void onCompleted() {
 
-        @Override
-        protected void onPostExecute(String result) {
-            tv_result.setText(result);
-        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(UserInfo userInfo) {
+                        tv_result.setText(userInfo.getEmail());
+                    }
+                });
     }
+
+//    class UserTask extends AsyncTask<Call,Void,String> {
+//        @Override
+//        protected String doInBackground(Call... params) {
+//            Call<UserInfo> call = params[0];
+//            try {
+//                Response<UserInfo> response = call.execute();
+//                return response.body().getEmail();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            return null;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String result) {
+//            tv_result.setText(result);
+//        }
+//    }
 }

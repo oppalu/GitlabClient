@@ -6,6 +6,7 @@ import com.example.phoebegl.gitlabclient.model.UserInfo;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
+import rx.Observable;
 
 /**
  * Created by phoebegl on 2017/6/6.
@@ -14,5 +15,5 @@ import retrofit2.http.POST;
 public interface ApiService {
 
     @POST("user/auth")
-    Call<UserInfo> login(@Body Account account);
+    Observable<UserInfo> login(@Body Account account);
 }
