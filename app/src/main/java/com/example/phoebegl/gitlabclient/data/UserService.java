@@ -1,12 +1,18 @@
 package com.example.phoebegl.gitlabclient.data;
 
+import com.example.phoebegl.gitlabclient.MyApp;
 import com.example.phoebegl.gitlabclient.data.util.RetrofitWrapper;
 import com.example.phoebegl.gitlabclient.model.Account;
+import com.example.phoebegl.gitlabclient.model.Group;
 import com.example.phoebegl.gitlabclient.model.UserInfo;
+
+import java.util.List;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+
+import static com.example.phoebegl.gitlabclient.MyApp.getToken;
 
 /**
  * Created by phoebegl on 2017/6/13.
@@ -30,6 +36,13 @@ public class UserService {
     public Observable<UserInfo> getUserInfo(String username,String password) {
         Account account = new Account(username,password);
         return service.login(account)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Observable<List<Group>> getGroup() {
+        String token = MyApp.getToken();
+        return service.getGroup(token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
