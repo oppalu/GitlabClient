@@ -1,4 +1,4 @@
-package com.example.phoebegl.gitlabclient.ui.fragment.teacher.exercise;
+package com.example.phoebegl.gitlabclient.ui.fragment.t_exercise;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +11,7 @@ import com.example.phoebegl.gitlabclient.R;
 import com.example.phoebegl.gitlabclient.ui.base.BaseMainFragment;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by phoebegl on 2017/6/14.
@@ -34,6 +35,7 @@ public class TExerciseFragment extends BaseMainFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_teacher_exercise, container, false);
+        ButterKnife.bind(this,mView);
         return mView;
     }
 
@@ -49,7 +51,4 @@ public class TExerciseFragment extends BaseMainFragment {
         mToolbar.setTitle("练习列表");
     }
 
-    public void onBackToFirstFragment() {
-        _mBackToFirstListener.onBackToFirstFragment();
-    }
 }

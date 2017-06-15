@@ -34,6 +34,9 @@ public class EnterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MyApp app = (MyApp)getApplication();
+        app.activities.add(this);
+
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
     }
@@ -84,5 +87,18 @@ public class EnterActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MyApp app = (MyApp)getApplication();
+        app.activities.remove(this);
+    }
+
+    @Override
+    public void onBackPressed() {
+        MyApp app = (MyApp)getApplication();
+        app.close();
     }
 }

@@ -5,8 +5,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar"
-        android:id="@+id/tinfo_toolbar"/>
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tinfo_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/AppTheme.NoActionBar.PopupOverlay"
+        app:titleTextAppearance="@style/Toolbar_TextAppearance_White"/>
 
     <RelativeLayout
         android:id="@+id/t_info_container_upper"
@@ -77,5 +83,6 @@
         android:background="@color/colorPrimaryDark"
         android:gravity="center"
         android:text="退出登录"
+        android:onClick="t_logout"
         android:textColor="@android:color/white" />
 </RelativeLayout>

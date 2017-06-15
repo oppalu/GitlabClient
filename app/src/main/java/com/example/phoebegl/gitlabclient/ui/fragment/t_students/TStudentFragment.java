@@ -1,4 +1,4 @@
-package com.example.phoebegl.gitlabclient.ui.fragment.teacher.students;
+package com.example.phoebegl.gitlabclient.ui.fragment.t_students;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +11,7 @@ import com.example.phoebegl.gitlabclient.R;
 import com.example.phoebegl.gitlabclient.ui.base.BaseMainFragment;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by phoebegl on 2017/6/14.
@@ -35,6 +36,7 @@ public class TStudentFragment extends BaseMainFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_teacher_list, container, false);
+        ButterKnife.bind(this,mView);
         return mView;
     }
 
@@ -50,7 +52,4 @@ public class TStudentFragment extends BaseMainFragment {
         mToolbar.setTitle("学生列表");
     }
 
-    public void onBackToFirstFragment() {
-        _mBackToFirstListener.onBackToFirstFragment();
-    }
 }

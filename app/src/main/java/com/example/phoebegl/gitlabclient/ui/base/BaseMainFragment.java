@@ -1,31 +1,15 @@
 package com.example.phoebegl.gitlabclient.ui.base;
 
-import android.content.Context;
-
-import com.example.phoebegl.gitlabclient.ui.fragment.teacher.students.TStudentFragment;
+import android.widget.Toast;
 
 /**
  * Created by phoebegl on 2017/6/14.
  */
 
 public class BaseMainFragment extends BaseFragment {
-    protected OnBackToFirstListener _mBackToFirstListener;
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnBackToFirstListener) {
-            _mBackToFirstListener = (OnBackToFirstListener) context;
-        } else {
-            throw new RuntimeException(context.toString()+ " must implement OnBackToFirstListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        _mBackToFirstListener = null;
-    }
+    // 再点一次退出程序时间设置
+    private static final long WAIT_TIME = 2000L;
+    private long TOUCH_TIME = 0;
 
     /**
      * 处理回退事件
@@ -34,19 +18,12 @@ public class BaseMainFragment extends BaseFragment {
      */
     @Override
     public boolean onBackPressedSupport() {
-        if (getChildFragmentManager().getBackStackEntryCount() > 1) {
-            popChild();
+        if (System.currentTimeMillis() - TOUCH_TIME < WAIT_TIME) {
+            _mActivity.finish();
         } else {
-            if (this instanceof TStudentFragment) {   // 如果是 第一个Fragment 则退出app
-                _mActivity.finish();
-            } else {                                    // 如果不是,则回到第一个Fragment
-                _mBackToFirstListener.onBackToFirstFragment();
-            }
+            TOUCH_TIME = System.currentTimeMillis();
+            Toast.makeText(_mActivity, "再按一次退出登录", Toast.LENGTH_SHORT).show();
         }
         return true;
-    }
-
-    public interface OnBackToFirstListener {
-        void onBackToFirstFragment();
     }
 }

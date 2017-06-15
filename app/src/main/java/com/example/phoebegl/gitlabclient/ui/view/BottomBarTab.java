@@ -18,9 +18,6 @@ import android.widget.TextView;
 
 import com.example.phoebegl.gitlabclient.R;
 
-/**
- * Created by YoKeyword on 16/6/3.
- */
 public class BottomBarTab extends FrameLayout {
     private ImageView mIcon;
     private TextView mTvTitle;
