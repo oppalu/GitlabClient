@@ -1,15 +1,15 @@
 package com.example.phoebegl.gitlabclient;
 
+import android.app.Application;
 import android.util.Base64;
 
 import com.example.phoebegl.gitlabclient.model.UserInfo;
 
 /**
- * Created by phoebegl on 2017/6/13.
+ * Created by phoebegl on 2017/6/14.
  */
 
-public class CommonToken {
-
+public class MyApp extends Application {
     private static UserInfo currentUser;
     private static String token;
 
@@ -18,7 +18,7 @@ public class CommonToken {
     }
 
     public static void setCurrentUser(UserInfo currentUser) {
-        CommonToken.currentUser = currentUser;
+        MyApp.currentUser = currentUser;
     }
 
     public static String getToken() {
@@ -27,6 +27,11 @@ public class CommonToken {
 
     public static void setToken(String username,String password) {
         String token = Base64.encodeToString((username+":"+password).getBytes(),Base64.NO_WRAP);
-        CommonToken.token = token;
+        MyApp.token = token;
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
     }
 }

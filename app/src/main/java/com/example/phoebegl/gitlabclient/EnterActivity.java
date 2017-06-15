@@ -11,8 +11,8 @@ import com.example.phoebegl.gitlabclient.data.UserService;
 import com.example.phoebegl.gitlabclient.data.util.ApiException;
 import com.example.phoebegl.gitlabclient.data.util.ExceptionHandler;
 import com.example.phoebegl.gitlabclient.model.UserInfo;
-import com.example.phoebegl.gitlabclient.ui.activity.StudentActivity;
-import com.example.phoebegl.gitlabclient.ui.activity.TeacherActivity;
+import com.example.phoebegl.gitlabclient.ui.StudentActivity;
+import com.example.phoebegl.gitlabclient.ui.TeacherActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,6 +42,7 @@ public class EnterActivity extends AppCompatActivity {
     public void login() {
         final String username = et_username.getText().toString();
         final String password = et_password.getText().toString();
+
         if(username.equals("") || password.equals(""))
             Toast.makeText(getApplication(),"用户名或密码不得为空！", Toast.LENGTH_SHORT).show();
         else {
@@ -50,9 +51,9 @@ public class EnterActivity extends AppCompatActivity {
                         @Override
                         public void onCompleted() {
                             Intent intent = null;
-                            if(CommonToken.getCurrentUser().getType().equals("student"))
+                            if(MyApp.getCurrentUser().getType().equals("student"))
                                intent = new Intent(EnterActivity.this, StudentActivity.class);
-                            else if(CommonToken.getCurrentUser().getType().equals("teacher"))
+                            else if(MyApp.getCurrentUser().getType().equals("teacher"))
                                 intent = new Intent(EnterActivity.this, TeacherActivity.class);
                             startActivity(intent);
                         }
@@ -68,8 +69,8 @@ public class EnterActivity extends AppCompatActivity {
 
                         @Override
                         public void onNext(UserInfo userInfo) {
-                            CommonToken.setCurrentUser(userInfo);
-                            CommonToken.setToken(username,password);
+                            MyApp.setCurrentUser(userInfo);
+                            MyApp.setToken(username,password);
                         }
                     });
         }

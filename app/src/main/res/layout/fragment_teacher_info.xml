@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar"
+        android:id="@+id/tinfo_toolbar"/>
+
+    <RelativeLayout
+        android:id="@+id/t_info_container_upper"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="@dimen/actionbar_height"
+        android:gravity="center" >
+
+        <ImageView
+            android:id="@+id/teacher_avatar"
+            android:layout_width="80dp"
+            android:layout_gravity="center"
+            android:src="@drawable/avatar"
+            android:layout_height="80dp"/>
+
+        <TextView
+            android:id="@+id/teacher_username"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="用户名"
+            android:textSize="18dp"
+            android:layout_below="@id/teacher_avatar" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/tinfo_container_lower"
+        android:layout_width="match_parent"
+        android:layout_marginTop="256dp"
+        android:layout_height="100dp">
+
+        <TextView
+            android:id="@+id/teacher_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textSize="18dp"
+            android:text="老师姓名" />
+
+        <TextView
+            android:id="@+id/teacher_gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/teacher_name"
+            android:gravity="center"
+            android:textSize="18dp"
+            android:layout_marginTop="10dp"
+            android:text="老师性别"/>
+
+        <TextView
+            android:id="@+id/teacher_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/teacher_gender"
+            android:gravity="center"
+            android:textSize="18dp"
+            android:layout_marginTop="10dp"
+            android:text="老师邮箱"/>
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_logout"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/tinfo_container_lower"
+        android:background="@color/colorPrimaryDark"
+        android:gravity="center"
+        android:text="退出登录"
+        android:textColor="@android:color/white" />
+</RelativeLayout>
