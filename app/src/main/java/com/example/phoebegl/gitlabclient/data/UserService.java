@@ -4,6 +4,7 @@ import com.example.phoebegl.gitlabclient.MyApp;
 import com.example.phoebegl.gitlabclient.data.util.RetrofitWrapper;
 import com.example.phoebegl.gitlabclient.model.Account;
 import com.example.phoebegl.gitlabclient.model.Group;
+import com.example.phoebegl.gitlabclient.model.Student;
 import com.example.phoebegl.gitlabclient.model.UserInfo;
 
 import java.util.List;
@@ -43,6 +44,13 @@ public class UserService {
     public Observable<List<Group>> getGroup() {
         String token = MyApp.getToken();
         return service.getGroup(token)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Observable<List<Student>> getStudentsByGroup(int groupid) {
+        String token = MyApp.getToken();
+        return service.getStudentsByGroup(token,groupid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

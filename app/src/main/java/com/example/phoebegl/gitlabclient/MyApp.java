@@ -33,7 +33,7 @@ public class MyApp extends Application {
         if(username==null && password==null)
             MyApp.token = null;
         else {
-            String token = Base64.encodeToString((username+":"+password).getBytes(),Base64.NO_WRAP);
+            String token = "Basic " + Base64.encodeToString((username+":"+password).getBytes(),Base64.NO_WRAP);
             MyApp.token = token;
         }
 

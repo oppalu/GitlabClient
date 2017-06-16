@@ -8,22 +8,22 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.phoebegl.gitlabclient.R;
+import com.example.phoebegl.gitlabclient.model.Group;
 import com.example.phoebegl.gitlabclient.ui.listener.OnItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.MyViewHolder> {
-    private List<String> mItems = new ArrayList<>();
+    private List<Group> mItems = new ArrayList<>();
     private LayoutInflater mInflater;
-
     private OnItemClickListener mClickListener;
 
     public GroupAdapter(Context context) {
         this.mInflater = LayoutInflater.from(context);
     }
 
-    public void setDatas(List<String> items) {
+    public void setDatas(List<Group> items) {
         mItems.clear();
         mItems.addAll(items);
         notifyDataSetChanged();
@@ -47,8 +47,13 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.MyViewHolder
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        String item = mItems.get(position);
-        holder.tvTitle.setText(item);
+        Group item = mItems.get(position);
+        holder.groupid.setText(String.valueOf(item.getId()));
+        holder.groupname.setText(item.getName());
+    }
+
+    public void setOnItemClickListener(OnItemClickListener itemClickListener) {
+        this.mClickListener = itemClickListener;
     }
 
     @Override
@@ -57,15 +62,14 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.MyViewHolder
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvTitle;
+        private TextView groupid;
+        private TextView groupname;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            tvTitle = (TextView) itemView.findViewById(R.id.item_group);
-        }
-    }
+            groupid = (TextView) itemView.findViewById(R.id.groupid);
+            groupname = (TextView) itemView.findViewById(R.id.groupname);
 
-    public void setOnItemClickListener(OnItemClickListener itemClickListener) {
-        this.mClickListener = itemClickListener;
+        }
     }
 }

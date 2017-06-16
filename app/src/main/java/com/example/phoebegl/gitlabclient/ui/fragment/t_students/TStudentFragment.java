@@ -2,6 +2,7 @@ package com.example.phoebegl.gitlabclient.ui.fragment.t_students;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringDef;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -109,9 +110,7 @@ public class TStudentFragment extends BaseMainFragment implements SwipeRefreshLa
 
                     @Override
                     public void onNext(List<Group> groups) {
-                        for(Group group : groups) {
-                            Log.i("MainActivity",group.getName());
-                        }
+                        adapter.setDatas(groups);
                     }
                 });
     }
