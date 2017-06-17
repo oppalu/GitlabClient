@@ -20,6 +20,7 @@ import com.example.phoebegl.gitlabclient.model.UserInfo;
 import com.example.phoebegl.gitlabclient.ui.TeacherActivity;
 import com.example.phoebegl.gitlabclient.ui.adapter.GroupAdapter;
 import com.example.phoebegl.gitlabclient.ui.base.BaseMainFragment;
+import com.example.phoebegl.gitlabclient.ui.event.StartBrotherEvent;
 import com.example.phoebegl.gitlabclient.ui.event.TabSelectedEvent;
 import com.example.phoebegl.gitlabclient.ui.listener.OnItemClickListener;
 
@@ -31,6 +32,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import me.yokeyword.fragmentation.SupportFragment;
 import rx.Subscriber;
 
 /**
@@ -79,6 +81,15 @@ public class TStudentFragment extends BaseMainFragment implements SwipeRefreshLa
         LinearLayoutManager manager = new LinearLayoutManager(_mActivity);
         list.setLayoutManager(manager);
         list.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(int position, View view, RecyclerView.ViewHolder vh) {
+                StudentsInfoFragment fragment = StudentsInfoFragment.newInstance(adapter.getGroupId(position));
+                start(fragment);
+//                EventBus.getDefault().post(new StartBrotherEvent(StudentsInfoFragment.newInstance(adapter.getGroupId(position))));
+            }
+        });
 
         list.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override

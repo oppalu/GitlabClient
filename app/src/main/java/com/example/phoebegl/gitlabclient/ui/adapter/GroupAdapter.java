@@ -61,6 +61,10 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.MyViewHolder
         return mItems.size();
     }
 
+    public int getGroupId(int position) {
+        return mItems.get(position).getId();
+    }
+
     class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView groupid;
         private TextView groupname;

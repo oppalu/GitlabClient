@@ -9,6 +9,7 @@ import android.view.View;
 import com.example.phoebegl.gitlabclient.EnterActivity;
 import com.example.phoebegl.gitlabclient.MyApp;
 import com.example.phoebegl.gitlabclient.R;
+import com.example.phoebegl.gitlabclient.ui.event.StartBrotherEvent;
 import com.example.phoebegl.gitlabclient.ui.event.TabSelectedEvent;
 import com.example.phoebegl.gitlabclient.ui.fragment.t_exam.TExamFragment;
 import com.example.phoebegl.gitlabclient.ui.fragment.t_exercise.TExerciseFragment;
@@ -19,6 +20,7 @@ import com.example.phoebegl.gitlabclient.ui.view.BottomBar;
 import com.example.phoebegl.gitlabclient.ui.view.BottomBarTab;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -128,8 +130,14 @@ public class TeacherActivity extends SupportActivity {
         super.onBackPressedSupport();
     }
 
+    @Subscribe
+    public void startBrother(StartBrotherEvent event) {
+        start(event.targetFragment);
+    }
+
     @Override
     protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
         super.onDestroy();
         MyApp app = (MyApp)getApplication();
         app.activities.remove(this);
