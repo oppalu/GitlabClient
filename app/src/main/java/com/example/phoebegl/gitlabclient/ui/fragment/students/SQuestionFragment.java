@@ -1,10 +1,7 @@
-package com.example.phoebegl.gitlabclient.ui.fragment.teachers;
+package com.example.phoebegl.gitlabclient.ui.fragment.students;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,13 +9,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.phoebegl.gitlabclient.R;
-import com.example.phoebegl.gitlabclient.model.Exam;
 import com.example.phoebegl.gitlabclient.model.Question;
-import com.example.phoebegl.gitlabclient.model.Status;
-import com.example.phoebegl.gitlabclient.ui.adapter.QuestionAdapter;
 import com.example.phoebegl.gitlabclient.ui.base.BaseBackFragment;
-
-import java.util.List;
+import com.example.phoebegl.gitlabclient.ui.fragment.teachers.QuestioninfoFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,7 +20,7 @@ import butterknife.ButterKnife;
  * Created by phoebegl on 2017/6/18.
  */
 
-public class QuestioninfoFragment extends BaseBackFragment {
+public class SQuestionFragment extends BaseBackFragment {
 
     @BindView(R.id.question_toolbar)
     Toolbar mToolbar;
@@ -51,10 +44,10 @@ public class QuestioninfoFragment extends BaseBackFragment {
     static Question info;
     private View mView;
 
-    public static QuestioninfoFragment newInstance(Question info) {
+    public static SQuestionFragment newInstance(Question info) {
         Bundle args = new Bundle();
-        QuestioninfoFragment.info = info;
-        QuestioninfoFragment fragment = new QuestioninfoFragment();
+        SQuestionFragment.info = info;
+        SQuestionFragment fragment = new SQuestionFragment();
         fragment.setArguments(args);
         return fragment;
     }

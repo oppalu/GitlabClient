@@ -1,4 +1,4 @@
-package com.example.phoebegl.gitlabclient.ui.fragment.teachers;
+package com.example.phoebegl.gitlabclient.ui.fragment.students;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,6 +18,7 @@ import com.example.phoebegl.gitlabclient.model.Status;
 import com.example.phoebegl.gitlabclient.ui.adapter.QuestionAdapter;
 import com.example.phoebegl.gitlabclient.ui.base.BaseBackFragment;
 import com.example.phoebegl.gitlabclient.ui.event.StartBrotherEvent;
+import com.example.phoebegl.gitlabclient.ui.fragment.teachers.QuestioninfoFragment;
 import com.example.phoebegl.gitlabclient.ui.listener.OnItemClickListener;
 
 import org.greenrobot.eventbus.EventBus;
@@ -31,7 +32,7 @@ import butterknife.ButterKnife;
  * Created by phoebegl on 2017/6/18.
  */
 
-public class ExaminfoFragment extends BaseBackFragment{
+public class SExaminfoFragment extends BaseBackFragment {
 
     @BindView(R.id.examinfo_toolbar)
     Toolbar mToolbar;
@@ -54,10 +55,10 @@ public class ExaminfoFragment extends BaseBackFragment{
     private boolean mInAtTop = true;
     private int mScrollTotal;
 
-    public static ExaminfoFragment newInstance(Exam info) {
+    public static SExaminfoFragment newInstance(Exam info) {
         Bundle args = new Bundle();
-        ExaminfoFragment.info = info;
-        ExaminfoFragment fragment = new ExaminfoFragment();
+        SExaminfoFragment.info = info;
+        SExaminfoFragment fragment = new SExaminfoFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -70,7 +71,7 @@ public class ExaminfoFragment extends BaseBackFragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_exam_info, container, false);
+        mView = inflater.inflate(R.layout.fragment_s_exam_info, container, false);
         ButterKnife.bind(this,mView);
         initView();
         return attachToSwipeBack(mView);
@@ -89,7 +90,7 @@ public class ExaminfoFragment extends BaseBackFragment{
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position, View view, RecyclerView.ViewHolder vh) {
-                EventBus.getDefault().post(new StartBrotherEvent(QuestioninfoFragment.newInstance(adapter.getItem(position))));
+                EventBus.getDefault().post(new StartBrotherEvent(SQuestionFragment.newInstance(adapter.getItem(position))));
             }
         });
 
