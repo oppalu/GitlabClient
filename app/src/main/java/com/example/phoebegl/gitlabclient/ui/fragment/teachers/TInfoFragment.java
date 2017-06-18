@@ -1,4 +1,4 @@
-package com.example.phoebegl.gitlabclient.ui.fragment.teacher;
+package com.example.phoebegl.gitlabclient.ui.fragment.teachers;
 
 import android.graphics.BitmapFactory;
 import android.os.Bundle;

@@ -1,4 +1,4 @@
-package com.example.phoebegl.gitlabclient.ui.fragment.teacher;
+package com.example.phoebegl.gitlabclient.ui.fragment.teachers;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,17 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.phoebegl.gitlabclient.R;
-import com.example.phoebegl.gitlabclient.data.CourseService;
-import com.example.phoebegl.gitlabclient.model.Exam;
-import com.example.phoebegl.gitlabclient.ui.adapter.ExamAdapter;
-import com.example.phoebegl.gitlabclient.ui.base.BaseMainFragment;
-import com.example.phoebegl.gitlabclient.ui.event.StartBrotherEvent;
-import com.example.phoebegl.gitlabclient.ui.event.TabSelectedEvent;
-import com.example.phoebegl.gitlabclient.ui.fragment.TeacherMainFragment;
-import com.example.phoebegl.gitlabclient.ui.listener.OnItemClickListener;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
+import com.example.phoebegl.gitlabclient.data.UserService;
+import com.example.phoebegl.gitlabclient.model.UserInfo;
+import com.example.phoebegl.gitlabclient.ui.adapter.StudentAdapter;
+import com.example.phoebegl.gitlabclient.ui.base.BaseBackFragment;
 
 import java.util.List;
 
@@ -30,61 +23,56 @@ import butterknife.ButterKnife;
 import rx.Subscriber;
 
 /**
- * Created by phoebegl on 2017/6/14.
+ * Created by phoebegl on 2017/6/16.
  */
 
-public class TExamFragment extends BaseMainFragment implements SwipeRefreshLayout.OnRefreshListener {
+public class StudentsInfoFragment extends BaseBackFragment implements SwipeRefreshLayout.OnRefreshListener{
 
-    @BindView(R.id.texam_toolbar)
+    @BindView(R.id.tstudents_toolbar)
     Toolbar mToolbar;
-    @BindView(R.id.refresh_layout)
+    @BindView(R.id.refresh_layouts)
     SwipeRefreshLayout refreshLayout;
-    @BindView(R.id.exam_list)
+    @BindView(R.id.students_list)
     RecyclerView list;
 
+    static int groupid;
+    private StudentAdapter adapter;
     private View mView;
     private boolean mInAtTop = true;
     private int mScrollTotal;
-    private ExamAdapter adapter;
 
-    public static TExamFragment getInstance() {
+    public static StudentsInfoFragment newInstance(int groupid) {
         Bundle args = new Bundle();
-        TExamFragment fragment = new TExamFragment();
+        StudentsInfoFragment.groupid = groupid;
+        StudentsInfoFragment fragment = new StudentsInfoFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_teacher_exam, container, false);
+        mView = inflater.inflate(R.layout.fragment_teacher_students, container, false);
         ButterKnife.bind(this,mView);
         initView();
-        return mView;
+        return attachToSwipeBack(mView);
     }
 
     private void initView() {
-        EventBus.getDefault().register(this);
-        mToolbar.setTitle("考试列表");
-    }
-
-    @Override
-    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
-        super.onLazyInitView(savedInstanceState);
+        mToolbar.setTitle(groupid+"班学生列表");
+        initToolbarNav(mToolbar);
         refreshLayout.setOnRefreshListener(this);
 
-        adapter = new ExamAdapter(_mActivity);
+        adapter = new StudentAdapter(_mActivity);
         list.setHasFixedSize(true);
         LinearLayoutManager manager = new LinearLayoutManager(_mActivity);
         list.setLayoutManager(manager);
         list.setAdapter(adapter);
-
-        adapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(int position, View view, RecyclerView.ViewHolder vh) {
-                EventBus.getDefault().post(new StartBrotherEvent(ExaminfoFragment.newInstance(adapter.getExam(position))));
-            }
-        });
 
         list.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -102,8 +90,8 @@ public class TExamFragment extends BaseMainFragment implements SwipeRefreshLayou
     }
 
     public void initData() {
-        CourseService.getInstance().getExams(1)
-                .subscribe(new Subscriber<List<Exam>>() {
+        UserService.getInstance().getStudentsByGroup(groupid)
+                .subscribe(new Subscriber<List<UserInfo>>() {
                     @Override
                     public void onCompleted() {
 
@@ -115,8 +103,8 @@ public class TExamFragment extends BaseMainFragment implements SwipeRefreshLayou
                     }
 
                     @Override
-                    public void onNext(List<Exam> exams) {
-                        adapter.setDatas(exams);
+                    public void onNext(List<UserInfo> students) {
+                        adapter.setDatas(students);
                     }
                 });
     }
@@ -131,18 +119,6 @@ public class TExamFragment extends BaseMainFragment implements SwipeRefreshLayou
         }, 2500);
     }
 
-    @Subscribe
-    public void onTabSelectedEvent(TabSelectedEvent event) {
-        if (event.position != TeacherMainFragment.FIRST) return;
-
-        if (mInAtTop) {
-            refreshLayout.setRefreshing(true);
-            onRefresh();
-        } else {
-            scrollToTop();
-        }
-    }
-
     private void scrollToTop() {
         list.smoothScrollToPosition(0);
     }
@@ -151,6 +127,5 @@ public class TExamFragment extends BaseMainFragment implements SwipeRefreshLayou
     public void onDestroyView() {
         super.onDestroyView();
         list.setAdapter(null);
-        EventBus.getDefault().unregister(this);
     }
 }

@@ -10,11 +10,11 @@ import com.example.phoebegl.gitlabclient.R;
 import com.example.phoebegl.gitlabclient.ui.base.BaseFragment;
 import com.example.phoebegl.gitlabclient.ui.event.StartBrotherEvent;
 import com.example.phoebegl.gitlabclient.ui.event.TabSelectedEvent;
-import com.example.phoebegl.gitlabclient.ui.fragment.teacher.TExamFragment;
-import com.example.phoebegl.gitlabclient.ui.fragment.teacher.TExerciseFragment;
-import com.example.phoebegl.gitlabclient.ui.fragment.teacher.THomeworkFragment;
-import com.example.phoebegl.gitlabclient.ui.fragment.teacher.TInfoFragment;
-import com.example.phoebegl.gitlabclient.ui.fragment.teacher.TStudentFragment;
+import com.example.phoebegl.gitlabclient.ui.fragment.teachers.TExamFragment;
+import com.example.phoebegl.gitlabclient.ui.fragment.teachers.TExerciseFragment;
+import com.example.phoebegl.gitlabclient.ui.fragment.teachers.THomeworkFragment;
+import com.example.phoebegl.gitlabclient.ui.fragment.teachers.TInfoFragment;
+import com.example.phoebegl.gitlabclient.ui.fragment.teachers.TStudentFragment;
 import com.example.phoebegl.gitlabclient.ui.view.BottomBar;
 import com.example.phoebegl.gitlabclient.ui.view.BottomBarTab;
 

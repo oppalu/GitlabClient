@@ -1,4 +1,4 @@
-package com.example.phoebegl.gitlabclient.ui.fragment.teacher;
+package com.example.phoebegl.gitlabclient.ui.fragment.teachers;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,42 +9,51 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.phoebegl.gitlabclient.R;
-import com.example.phoebegl.gitlabclient.data.UserService;
-import com.example.phoebegl.gitlabclient.model.UserInfo;
-import com.example.phoebegl.gitlabclient.ui.adapter.StudentAdapter;
+import com.example.phoebegl.gitlabclient.model.Exam;
+import com.example.phoebegl.gitlabclient.model.Question;
+import com.example.phoebegl.gitlabclient.model.Status;
+import com.example.phoebegl.gitlabclient.ui.adapter.QuestionAdapter;
 import com.example.phoebegl.gitlabclient.ui.base.BaseBackFragment;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import rx.Subscriber;
 
 /**
- * Created by phoebegl on 2017/6/16.
+ * Created by phoebegl on 2017/6/18.
  */
 
-public class StudentsInfoFragment extends BaseBackFragment implements SwipeRefreshLayout.OnRefreshListener{
+public class ExaminfoFragment extends BaseBackFragment{
 
-    @BindView(R.id.tstudents_toolbar)
+    @BindView(R.id.examinfo_toolbar)
     Toolbar mToolbar;
-    @BindView(R.id.refresh_layouts)
+    @BindView(R.id.refresh_layout)
     SwipeRefreshLayout refreshLayout;
-    @BindView(R.id.students_list)
+    @BindView(R.id.question_list)
     RecyclerView list;
+    @BindView(R.id.exam_name)
+    TextView examname;
+    @BindView(R.id.exam_description)
+    TextView description;
+    @BindView(R.id.exam_time)
+    TextView examtime;
+    @BindView(R.id.exam_status)
+    TextView status;
 
-    static int groupid;
-    private StudentAdapter adapter;
+    static Exam info;
+    private QuestionAdapter adapter;
     private View mView;
     private boolean mInAtTop = true;
     private int mScrollTotal;
 
-    public static StudentsInfoFragment newInstance(int groupid) {
+    public static ExaminfoFragment newInstance(Exam info) {
         Bundle args = new Bundle();
-        StudentsInfoFragment.groupid = groupid;
-        StudentsInfoFragment fragment = new StudentsInfoFragment();
+        ExaminfoFragment.info = info;
+        ExaminfoFragment fragment = new ExaminfoFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -57,18 +66,17 @@ public class StudentsInfoFragment extends BaseBackFragment implements SwipeRefre
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_teacher_students, container, false);
+        mView = inflater.inflate(R.layout.fragment_exam_info, container, false);
         ButterKnife.bind(this,mView);
         initView();
         return attachToSwipeBack(mView);
     }
 
     private void initView() {
-        mToolbar.setTitle(groupid+"班学生列表");
+        mToolbar.setTitle("详细信息");
         initToolbarNav(mToolbar);
-        refreshLayout.setOnRefreshListener(this);
 
-        adapter = new StudentAdapter(_mActivity);
+        adapter = new QuestionAdapter(_mActivity);
         list.setHasFixedSize(true);
         LinearLayoutManager manager = new LinearLayoutManager(_mActivity);
         list.setLayoutManager(manager);
@@ -90,33 +98,12 @@ public class StudentsInfoFragment extends BaseBackFragment implements SwipeRefre
     }
 
     public void initData() {
-        UserService.getInstance().getStudentsByGroup(groupid)
-                .subscribe(new Subscriber<List<UserInfo>>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(List<UserInfo> students) {
-                        adapter.setDatas(students);
-                    }
-                });
-    }
-
-    @Override
-    public void onRefresh() {
-        refreshLayout.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                refreshLayout.setRefreshing(false);
-            }
-        }, 2500);
+        examname.setText(info.getTitle());
+        description.setText(info.getDescription());
+        examtime.setText(info.getStartAt()+" ~ "+info.getEndAt());
+        status.setText(Status.getInstance().getStatus(info.getStatus()));
+        List<Question> questions = info.getQuestions();
+        adapter.setDatas(questions);
     }
 
     private void scrollToTop() {
