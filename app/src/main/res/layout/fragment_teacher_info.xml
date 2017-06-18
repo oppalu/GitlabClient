@@ -77,8 +77,9 @@
 
     <Button
         android:id="@+id/btn_logout"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="40dp"
+        android:layout_gravity="center"
         android:layout_below="@id/tinfo_container_lower"
         android:background="@color/colorPrimaryDark"
         android:gravity="center"

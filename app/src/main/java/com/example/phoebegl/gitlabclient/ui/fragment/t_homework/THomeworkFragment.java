@@ -41,13 +41,6 @@ public class THomeworkFragment extends BaseMainFragment {
 
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
-        mToolbar.setNavigationIcon(R.mipmap.ic_arrow_back_white);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _mActivity.onBackPressed();
-            }
-        });
         mToolbar.setTitle("作业列表");
     }
 

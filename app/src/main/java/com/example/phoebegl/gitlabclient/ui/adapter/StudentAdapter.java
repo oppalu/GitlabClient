@@ -1,17 +1,22 @@
 package com.example.phoebegl.gitlabclient.ui.adapter;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.phoebegl.gitlabclient.MyApp;
 import com.example.phoebegl.gitlabclient.R;
 import com.example.phoebegl.gitlabclient.model.Group;
 import com.example.phoebegl.gitlabclient.model.Student;
 import com.example.phoebegl.gitlabclient.ui.listener.OnItemClickListener;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +58,18 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.MyViewHo
     @Override
     public void onBindViewHolder(StudentAdapter.MyViewHolder holder, int position) {
         Student item = mItems.get(position);
-        holder.studentname.setText(String.valueOf(item.getName()));
+
+        if(item.getAvatar() != null) {
+            try {
+                holder.avatar.setImageBitmap(BitmapFactory.decodeStream(new URL(item.getAvatar()).openStream()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        holder.studentname.setText(item.getName());
+        holder.studentnumber.setText(item.getNumber());
+        holder.studentemail.setText(item.getEmail());
+        holder.studentgit.setText("git名："+item.getGitUsername());
     }
 
     public void setOnItemClickListener(OnItemClickListener itemClickListener) {
@@ -66,11 +82,19 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.MyViewHo
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
+        private ImageView avatar;
         private TextView studentname;
+        private TextView studentnumber;
+        private TextView studentemail;
+        private TextView studentgit;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            studentname= (TextView) itemView.findViewById(R.id.studentname);
+            avatar = (ImageView) itemView.findViewById(R.id.img_avatar);
+            studentname= (TextView) itemView.findViewById(R.id.stuname);
+            studentnumber= (TextView) itemView.findViewById(R.id.stunumber);
+            studentemail= (TextView) itemView.findViewById(R.id.stuemail);
+            studentgit= (TextView) itemView.findViewById(R.id.stugit);
         }
     }
 }

@@ -19,10 +19,12 @@ import com.example.phoebegl.gitlabclient.ui.adapter.GroupAdapter;
 import com.example.phoebegl.gitlabclient.ui.adapter.StudentAdapter;
 import com.example.phoebegl.gitlabclient.ui.base.BaseBackFragment;
 import com.example.phoebegl.gitlabclient.ui.event.TabSelectedEvent;
+import com.example.phoebegl.gitlabclient.ui.fragment.TeacherMainFragment;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -35,7 +37,6 @@ import rx.Subscriber;
 
 public class StudentsInfoFragment extends BaseBackFragment implements SwipeRefreshLayout.OnRefreshListener{
 
-    private static final String ARG_STUDENT = "arg_student";
     @BindView(R.id.tstudents_toolbar)
     Toolbar mToolbar;
     @BindView(R.id.refresh_layouts)
@@ -57,19 +58,22 @@ public class StudentsInfoFragment extends BaseBackFragment implements SwipeRefre
         return fragment;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_teacher_students, container, false);
         ButterKnife.bind(this,mView);
         initView();
-        return mView;
+        return attachToSwipeBack(mView);
     }
 
     private void initView() {
-        EventBus.getDefault().register(this);
-
-        mToolbar.setTitle("学生列表");
+        mToolbar.setTitle(groupid+"班学生列表");
         initToolbarNav(mToolbar);
         refreshLayout.setOnRefreshListener(this);
 
@@ -124,18 +128,6 @@ public class StudentsInfoFragment extends BaseBackFragment implements SwipeRefre
         }, 2500);
     }
 
-    @Subscribe
-    public void onTabSelectedEvent(TabSelectedEvent event) {
-        if (event.position != TeacherActivity.FIRST) return;
-
-        if (mInAtTop) {
-            refreshLayout.setRefreshing(true);
-            onRefresh();
-        } else {
-            scrollToTop();
-        }
-    }
-
     private void scrollToTop() {
         list.smoothScrollToPosition(0);
     }
@@ -144,6 +136,5 @@ public class StudentsInfoFragment extends BaseBackFragment implements SwipeRefre
     public void onDestroyView() {
         super.onDestroyView();
         list.setAdapter(null);
-        EventBus.getDefault().unregister(this);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.phoebegl.gitlabclient.ui.fragment.t_students;
 
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringDef;
@@ -9,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,7 @@ import com.example.phoebegl.gitlabclient.ui.adapter.GroupAdapter;
 import com.example.phoebegl.gitlabclient.ui.base.BaseMainFragment;
 import com.example.phoebegl.gitlabclient.ui.event.StartBrotherEvent;
 import com.example.phoebegl.gitlabclient.ui.event.TabSelectedEvent;
+import com.example.phoebegl.gitlabclient.ui.fragment.TeacherMainFragment;
 import com.example.phoebegl.gitlabclient.ui.listener.OnItemClickListener;
 
 import org.greenrobot.eventbus.EventBus;
@@ -72,8 +75,12 @@ public class TStudentFragment extends BaseMainFragment implements SwipeRefreshLa
 
     private void initView() {
         EventBus.getDefault().register(this);
-
         mToolbar.setTitle("学生列表");
+    }
+
+    @Override
+    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
+        super.onLazyInitView(savedInstanceState);
         refreshLayout.setOnRefreshListener(this);
 
         adapter = new GroupAdapter(_mActivity);
@@ -85,9 +92,8 @@ public class TStudentFragment extends BaseMainFragment implements SwipeRefreshLa
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position, View view, RecyclerView.ViewHolder vh) {
-                StudentsInfoFragment fragment = StudentsInfoFragment.newInstance(adapter.getGroupId(position));
-                start(fragment);
-//                EventBus.getDefault().post(new StartBrotherEvent(StudentsInfoFragment.newInstance(adapter.getGroupId(position))));
+                Log.i("groupid",String.valueOf(adapter.getGroupId(position)));
+                EventBus.getDefault().post(new StartBrotherEvent(StudentsInfoFragment.newInstance(adapter.getGroupId(position))));
             }
         });
 
@@ -138,7 +144,7 @@ public class TStudentFragment extends BaseMainFragment implements SwipeRefreshLa
 
     @Subscribe
     public void onTabSelectedEvent(TabSelectedEvent event) {
-        if (event.position != TeacherActivity.FIRST) return;
+        if (event.position != TeacherMainFragment.FIRST) return;
 
         if (mInAtTop) {
             refreshLayout.setRefreshing(true);

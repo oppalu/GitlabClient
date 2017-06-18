@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="72dp"
+    android:layout_height="90dp"
     android:orientation="vertical"
     android:paddingBottom="8dp"
     android:background="@android:color/white"
@@ -17,20 +17,49 @@
         android:src="@drawable/avatar"
         android:tint="@color/bg_btn"/>
 
-    <TextView
-        android:id="@+id/studentname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:layout_toRightOf="@id/img_avatar"
-        android:textColor="@android:color/black"
-        android:textSize="16sp"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@id/img_avatar">
 
-    <TextView
-        android:id="@+id/number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/studentname"
+        <TextView
+            android:id="@+id/stuname"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="4dp"
+            android:textColor="@android:color/black"
+            android:text="姓名"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/stunumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="学号"
+            android:layout_marginTop="27dp" />
+
+        <TextView
+            android:id="@+id/stuemail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="4dp"
+            android:text="邮箱"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:id="@+id/stugit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="4dp"
+            android:text="git信息"
+            android:textSize="15sp"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="6dp"/>
+        android:background="#c9c9c9"/>
 </RelativeLayout>
