@@ -1,26 +1,19 @@
-package com.example.phoebegl.gitlabclient.ui.fragment.t_students;
+package com.example.phoebegl.gitlabclient.ui.fragment.teacher;
 
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringDef;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.phoebegl.gitlabclient.R;
-import com.example.phoebegl.gitlabclient.data.UserService;
-import com.example.phoebegl.gitlabclient.model.Group;
-import com.example.phoebegl.gitlabclient.model.UserInfo;
-import com.example.phoebegl.gitlabclient.ui.TeacherActivity;
-import com.example.phoebegl.gitlabclient.ui.adapter.GroupAdapter;
+import com.example.phoebegl.gitlabclient.data.CourseService;
+import com.example.phoebegl.gitlabclient.model.Exam;
+import com.example.phoebegl.gitlabclient.ui.adapter.ExamAdapter;
 import com.example.phoebegl.gitlabclient.ui.base.BaseMainFragment;
 import com.example.phoebegl.gitlabclient.ui.event.StartBrotherEvent;
 import com.example.phoebegl.gitlabclient.ui.event.TabSelectedEvent;
@@ -30,36 +23,33 @@ import com.example.phoebegl.gitlabclient.ui.listener.OnItemClickListener;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import me.yokeyword.fragmentation.SupportFragment;
 import rx.Subscriber;
 
 /**
  * Created by phoebegl on 2017/6/14.
- * 老师界面的学生列表
  */
 
-public class TStudentFragment extends BaseMainFragment implements SwipeRefreshLayout.OnRefreshListener{
+public class TExamFragment extends BaseMainFragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    @BindView(R.id.tstudent_toolbar)
+    @BindView(R.id.texam_toolbar)
     Toolbar mToolbar;
     @BindView(R.id.refresh_layout)
     SwipeRefreshLayout refreshLayout;
-    @BindView(R.id.student_list)
+    @BindView(R.id.exam_list)
     RecyclerView list;
 
     private View mView;
     private boolean mInAtTop = true;
     private int mScrollTotal;
-    private GroupAdapter adapter;
+    private ExamAdapter adapter;
 
-    public static TStudentFragment getInstance() {
+    public static TExamFragment getInstance() {
         Bundle args = new Bundle();
-        TStudentFragment fragment = new TStudentFragment();
+        TExamFragment fragment = new TExamFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -67,7 +57,7 @@ public class TStudentFragment extends BaseMainFragment implements SwipeRefreshLa
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_teacher_list, container, false);
+        mView = inflater.inflate(R.layout.fragment_teacher_exam, container, false);
         ButterKnife.bind(this,mView);
         initView();
         return mView;
@@ -75,7 +65,7 @@ public class TStudentFragment extends BaseMainFragment implements SwipeRefreshLa
 
     private void initView() {
         EventBus.getDefault().register(this);
-        mToolbar.setTitle("学生列表");
+        mToolbar.setTitle("考试列表");
     }
 
     @Override
@@ -83,7 +73,7 @@ public class TStudentFragment extends BaseMainFragment implements SwipeRefreshLa
         super.onLazyInitView(savedInstanceState);
         refreshLayout.setOnRefreshListener(this);
 
-        adapter = new GroupAdapter(_mActivity);
+        adapter = new ExamAdapter(_mActivity);
         list.setHasFixedSize(true);
         LinearLayoutManager manager = new LinearLayoutManager(_mActivity);
         list.setLayoutManager(manager);
@@ -92,8 +82,7 @@ public class TStudentFragment extends BaseMainFragment implements SwipeRefreshLa
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position, View view, RecyclerView.ViewHolder vh) {
-                Log.i("groupid",String.valueOf(adapter.getGroupId(position)));
-                EventBus.getDefault().post(new StartBrotherEvent(StudentsInfoFragment.newInstance(adapter.getGroupId(position))));
+                EventBus.getDefault().post(new StartBrotherEvent(ExaminfoFragment.newInstance(adapter.getExam(position))));
             }
         });
 
@@ -113,8 +102,8 @@ public class TStudentFragment extends BaseMainFragment implements SwipeRefreshLa
     }
 
     public void initData() {
-        UserService.getInstance().getGroup()
-                .subscribe(new Subscriber<List<Group>>() {
+        CourseService.getInstance().getExams(1)
+                .subscribe(new Subscriber<List<Exam>>() {
                     @Override
                     public void onCompleted() {
 
@@ -126,8 +115,8 @@ public class TStudentFragment extends BaseMainFragment implements SwipeRefreshLa
                     }
 
                     @Override
-                    public void onNext(List<Group> groups) {
-                        adapter.setDatas(groups);
+                    public void onNext(List<Exam> exams) {
+                        adapter.setDatas(exams);
                     }
                 });
     }

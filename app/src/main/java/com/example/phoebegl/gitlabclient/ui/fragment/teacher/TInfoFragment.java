@@ -1,6 +1,5 @@
-package com.example.phoebegl.gitlabclient.ui.fragment.t_info;
+package com.example.phoebegl.gitlabclient.ui.fragment.teacher;
 
-import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,18 +10,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.phoebegl.gitlabclient.EnterActivity;
 import com.example.phoebegl.gitlabclient.MyApp;
 import com.example.phoebegl.gitlabclient.R;
-import com.example.phoebegl.gitlabclient.ui.StudentActivity;
 import com.example.phoebegl.gitlabclient.ui.base.BaseMainFragment;
-import com.example.phoebegl.gitlabclient.ui.fragment.t_homework.THomeworkFragment;
 
 import java.net.URL;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by phoebegl on 2017/6/14.

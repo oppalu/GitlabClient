@@ -15,6 +15,8 @@ import java.util.ArrayList;
 public class MyApp extends Application {
     private static UserInfo currentUser;
     private static String token;
+    //只有一门课？？？
+    private static int courseId = 1;
     public ArrayList<Activity> activities;
 
     public static UserInfo getCurrentUser() {
@@ -36,7 +38,14 @@ public class MyApp extends Application {
             String token = "Basic " + Base64.encodeToString((username+":"+password).getBytes(),Base64.NO_WRAP);
             MyApp.token = token;
         }
+    }
 
+    public static int getCourseId() {
+        return courseId;
+    }
+
+    public static void setCourseId(int courseId) {
+        MyApp.courseId = courseId;
     }
 
     public void close() {

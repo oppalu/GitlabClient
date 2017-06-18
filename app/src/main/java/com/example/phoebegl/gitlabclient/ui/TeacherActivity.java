@@ -9,22 +9,10 @@ import android.view.View;
 import com.example.phoebegl.gitlabclient.EnterActivity;
 import com.example.phoebegl.gitlabclient.MyApp;
 import com.example.phoebegl.gitlabclient.R;
-import com.example.phoebegl.gitlabclient.ui.event.StartBrotherEvent;
-import com.example.phoebegl.gitlabclient.ui.event.TabSelectedEvent;
 import com.example.phoebegl.gitlabclient.ui.fragment.TeacherMainFragment;
-import com.example.phoebegl.gitlabclient.ui.fragment.t_exam.TExamFragment;
-import com.example.phoebegl.gitlabclient.ui.fragment.t_exercise.TExerciseFragment;
-import com.example.phoebegl.gitlabclient.ui.fragment.t_homework.THomeworkFragment;
-import com.example.phoebegl.gitlabclient.ui.fragment.t_info.TInfoFragment;
-import com.example.phoebegl.gitlabclient.ui.fragment.t_students.TStudentFragment;
-import com.example.phoebegl.gitlabclient.ui.view.BottomBar;
-import com.example.phoebegl.gitlabclient.ui.view.BottomBarTab;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import me.yokeyword.fragmentation.SupportActivity;
 import me.yokeyword.fragmentation.SupportFragment;
 import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;

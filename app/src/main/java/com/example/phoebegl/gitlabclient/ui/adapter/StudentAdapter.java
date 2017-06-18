@@ -3,17 +3,14 @@ package com.example.phoebegl.gitlabclient.ui.adapter;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.phoebegl.gitlabclient.MyApp;
 import com.example.phoebegl.gitlabclient.R;
-import com.example.phoebegl.gitlabclient.model.Group;
-import com.example.phoebegl.gitlabclient.model.Student;
+import com.example.phoebegl.gitlabclient.model.UserInfo;
 import com.example.phoebegl.gitlabclient.ui.listener.OnItemClickListener;
 
 import java.net.URL;
@@ -25,7 +22,7 @@ import java.util.List;
  */
 
 public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.MyViewHolder>  {
-    private List<Student> mItems = new ArrayList<>();
+    private List<UserInfo> mItems = new ArrayList<>();
     private LayoutInflater mInflater;
     private OnItemClickListener mClickListener;
 
@@ -33,7 +30,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.MyViewHo
         this.mInflater = LayoutInflater.from(context);
     }
 
-    public void setDatas(List<Student> items) {
+    public void setDatas(List<UserInfo> items) {
         mItems.clear();
         mItems.addAll(items);
         notifyDataSetChanged();
@@ -57,7 +54,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(StudentAdapter.MyViewHolder holder, int position) {
-        Student item = mItems.get(position);
+        UserInfo item = mItems.get(position);
 
         if(item.getAvatar() != null) {
             try {

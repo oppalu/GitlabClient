@@ -2,9 +2,7 @@ package com.example.phoebegl.gitlabclient.data;
 
 import com.example.phoebegl.gitlabclient.MyApp;
 import com.example.phoebegl.gitlabclient.data.util.RetrofitWrapper;
-import com.example.phoebegl.gitlabclient.model.Account;
-import com.example.phoebegl.gitlabclient.model.Group;
-import com.example.phoebegl.gitlabclient.model.UserInfo;
+import com.example.phoebegl.gitlabclient.model.Exam;
 
 import java.util.List;
 
@@ -13,41 +11,41 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by phoebegl on 2017/6/13.
+ * Created by phoebegl on 2017/6/18.
  */
 
-public class UserService {
+public class CourseService {
 
-    private static UserService instance;
+    private static CourseService instance;
     private ApiService service;
 
-    private UserService() {
+    private CourseService() {
         service = RetrofitWrapper.getInstance().create(ApiService.class);
     }
 
-    public static UserService getInstance() {
+    public static CourseService getInstance() {
         if(instance == null)
-            instance = new UserService();
+            instance = new CourseService();
         return instance;
     }
 
-    public Observable<UserInfo> getUserInfo(String username,String password) {
-        Account account = new Account(username,password);
-        return service.login(account)
+    public Observable<List<Exam>> getExams(int courseId) {
+        String token = MyApp.getToken();
+        return service.getExams(token,courseId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Observable<List<Group>> getGroup() {
+    public Observable<List<Exam>> getHomeworks(int courseId) {
         String token = MyApp.getToken();
-        return service.getGroup(token)
+        return service.getHomework(token,courseId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Observable<List<UserInfo>> getStudentsByGroup(int groupid) {
+    public Observable<List<Exam>> getExercises(int courseId) {
         String token = MyApp.getToken();
-        return service.getStudentsByGroup(token,groupid)
+        return service.getExercise(token,courseId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

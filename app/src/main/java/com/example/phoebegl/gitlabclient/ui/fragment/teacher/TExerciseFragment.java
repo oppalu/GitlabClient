@@ -1,4 +1,4 @@
-package com.example.phoebegl.gitlabclient.ui.fragment.t_students;
+package com.example.phoebegl.gitlabclient.ui.fragment.teacher;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,20 +11,18 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.phoebegl.gitlabclient.R;
-import com.example.phoebegl.gitlabclient.data.UserService;
-import com.example.phoebegl.gitlabclient.model.Group;
-import com.example.phoebegl.gitlabclient.model.Student;
-import com.example.phoebegl.gitlabclient.ui.TeacherActivity;
-import com.example.phoebegl.gitlabclient.ui.adapter.GroupAdapter;
-import com.example.phoebegl.gitlabclient.ui.adapter.StudentAdapter;
-import com.example.phoebegl.gitlabclient.ui.base.BaseBackFragment;
+import com.example.phoebegl.gitlabclient.data.CourseService;
+import com.example.phoebegl.gitlabclient.model.Exam;
+import com.example.phoebegl.gitlabclient.ui.adapter.ExamAdapter;
+import com.example.phoebegl.gitlabclient.ui.base.BaseMainFragment;
+import com.example.phoebegl.gitlabclient.ui.event.StartBrotherEvent;
 import com.example.phoebegl.gitlabclient.ui.event.TabSelectedEvent;
 import com.example.phoebegl.gitlabclient.ui.fragment.TeacherMainFragment;
+import com.example.phoebegl.gitlabclient.ui.listener.OnItemClickListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -32,56 +30,61 @@ import butterknife.ButterKnife;
 import rx.Subscriber;
 
 /**
- * Created by phoebegl on 2017/6/16.
+ * Created by phoebegl on 2017/6/14.
  */
 
-public class StudentsInfoFragment extends BaseBackFragment implements SwipeRefreshLayout.OnRefreshListener{
+public class TExerciseFragment extends BaseMainFragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    @BindView(R.id.tstudents_toolbar)
+    @BindView(R.id.texam_toolbar)
     Toolbar mToolbar;
-    @BindView(R.id.refresh_layouts)
+    @BindView(R.id.refresh_layout)
     SwipeRefreshLayout refreshLayout;
-    @BindView(R.id.students_list)
+    @BindView(R.id.exam_list)
     RecyclerView list;
 
-    static int groupid;
-    private StudentAdapter adapter;
     private View mView;
     private boolean mInAtTop = true;
     private int mScrollTotal;
+    private ExamAdapter adapter;
 
-    public static StudentsInfoFragment newInstance(int groupid) {
+    public static TExerciseFragment getInstance() {
         Bundle args = new Bundle();
-        StudentsInfoFragment.groupid = groupid;
-        StudentsInfoFragment fragment = new StudentsInfoFragment();
+        TExerciseFragment fragment = new TExerciseFragment();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_teacher_students, container, false);
+        mView = inflater.inflate(R.layout.fragment_teacher_exam, container, false);
         ButterKnife.bind(this,mView);
         initView();
-        return attachToSwipeBack(mView);
+        return mView;
     }
 
     private void initView() {
-        mToolbar.setTitle(groupid+"班学生列表");
-        initToolbarNav(mToolbar);
+        EventBus.getDefault().register(this);
+        mToolbar.setTitle("练习列表");
+    }
+
+    @Override
+    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
+        super.onLazyInitView(savedInstanceState);
         refreshLayout.setOnRefreshListener(this);
 
-        adapter = new StudentAdapter(_mActivity);
+        adapter = new ExamAdapter(_mActivity);
         list.setHasFixedSize(true);
         LinearLayoutManager manager = new LinearLayoutManager(_mActivity);
         list.setLayoutManager(manager);
         list.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(int position, View view, RecyclerView.ViewHolder vh) {
+                EventBus.getDefault().post(new StartBrotherEvent(ExaminfoFragment.newInstance(adapter.getExam(position))));
+            }
+        });
 
         list.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -99,8 +102,8 @@ public class StudentsInfoFragment extends BaseBackFragment implements SwipeRefre
     }
 
     public void initData() {
-        UserService.getInstance().getStudentsByGroup(groupid)
-                .subscribe(new Subscriber<List<Student>>() {
+        CourseService.getInstance().getExercises(1)
+                .subscribe(new Subscriber<List<Exam>>() {
                     @Override
                     public void onCompleted() {
 
@@ -112,8 +115,8 @@ public class StudentsInfoFragment extends BaseBackFragment implements SwipeRefre
                     }
 
                     @Override
-                    public void onNext(List<Student> students) {
-                        adapter.setDatas(students);
+                    public void onNext(List<Exam> exams) {
+                        adapter.setDatas(exams);
                     }
                 });
     }
@@ -128,6 +131,18 @@ public class StudentsInfoFragment extends BaseBackFragment implements SwipeRefre
         }, 2500);
     }
 
+    @Subscribe
+    public void onTabSelectedEvent(TabSelectedEvent event) {
+        if (event.position != TeacherMainFragment.FIRST) return;
+
+        if (mInAtTop) {
+            refreshLayout.setRefreshing(true);
+            onRefresh();
+        } else {
+            scrollToTop();
+        }
+    }
+
     private void scrollToTop() {
         list.smoothScrollToPosition(0);
     }
@@ -136,5 +151,6 @@ public class StudentsInfoFragment extends BaseBackFragment implements SwipeRefre
     public void onDestroyView() {
         super.onDestroyView();
         list.setAdapter(null);
+        EventBus.getDefault().unregister(this);
     }
 }

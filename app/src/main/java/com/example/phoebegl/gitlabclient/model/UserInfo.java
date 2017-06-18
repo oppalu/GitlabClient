@@ -1,19 +1,33 @@
 package com.example.phoebegl.gitlabclient.model;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by phoebegl on 2017/6/7.
  */
 
 public class UserInfo{
+    private int id;
     private String username;
     private String name;
     private String type;
     private String avatar;
     private String gender;
     private String email;
+    private int schoolId;
     private int gitId;
     private String number;
+    private int groupId;
+    private String gitUsername;
     private String authority;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getUsername() {
         return username;
@@ -63,6 +77,14 @@ public class UserInfo{
         this.email = email;
     }
 
+    public int getSchoolId() {
+        return schoolId;
+    }
+
+    public void setSchoolId(int schoolId) {
+        this.schoolId = schoolId;
+    }
+
     public int getGitId() {
         return gitId;
     }
@@ -77,6 +99,22 @@ public class UserInfo{
 
     public void setNumber(String number) {
         this.number = number;
+    }
+
+    public int getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
+    }
+
+    public String getGitUsername() {
+        return gitUsername;
+    }
+
+    public void setGitUsername(String gitUsername) {
+        this.gitUsername = gitUsername;
     }
 
     public String getAuthority() {

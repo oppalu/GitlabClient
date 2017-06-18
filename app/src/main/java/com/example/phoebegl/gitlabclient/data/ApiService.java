@@ -1,13 +1,12 @@
 package com.example.phoebegl.gitlabclient.data;
 
 import com.example.phoebegl.gitlabclient.model.Account;
+import com.example.phoebegl.gitlabclient.model.Exam;
 import com.example.phoebegl.gitlabclient.model.Group;
-import com.example.phoebegl.gitlabclient.model.Student;
 import com.example.phoebegl.gitlabclient.model.UserInfo;
 
 import java.util.List;
 
-import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -28,5 +27,14 @@ public interface ApiService {
     Observable<List<Group>> getGroup(@Header("Authorization") String token);
 
     @GET("group/{groupid}/students")
-    Observable<List<Student>> getStudentsByGroup(@Header("Authorization") String token,@Path("groupid") int groupid);
+    Observable<List<UserInfo>> getStudentsByGroup(@Header("Authorization") String token,@Path("groupid") int groupid);
+
+    @GET("course/{courseId}/exam")
+    Observable<List<Exam>> getExams(@Header("Authorization") String token, @Path("courseId") int courseId);
+
+    @GET("course/{courseId}/homework")
+    Observable<List<Exam>> getHomework(@Header("Authorization") String token, @Path("courseId") int courseId);
+
+    @GET("course/{courseId}/exercise")
+    Observable<List<Exam>> getExercise(@Header("Authorization") String token, @Path("courseId") int courseId);
 }
