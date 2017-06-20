@@ -16,7 +16,7 @@ public class MyApp extends Application {
     private static UserInfo currentUser;
     private static String token;
     //只有一门课？？？
-    private static int courseId = 1;
+    private static int courseId = 2;
     public ArrayList<Activity> activities;
 
     public static UserInfo getCurrentUser() {

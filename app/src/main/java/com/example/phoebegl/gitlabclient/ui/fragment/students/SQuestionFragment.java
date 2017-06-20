@@ -6,15 +6,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.phoebegl.gitlabclient.R;
+import com.example.phoebegl.gitlabclient.data.CourseService;
 import com.example.phoebegl.gitlabclient.model.Question;
+import com.example.phoebegl.gitlabclient.model.Readme;
 import com.example.phoebegl.gitlabclient.ui.base.BaseBackFragment;
 import com.example.phoebegl.gitlabclient.ui.fragment.teachers.QuestioninfoFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import rx.Subscriber;
 
 /**
  * Created by phoebegl on 2017/6/18.
@@ -38,8 +43,10 @@ public class SQuestionFragment extends BaseBackFragment {
     TextView creator;
     @BindView(R.id.duration)
     TextView duration;
-    @BindView(R.id.knowledgeVos)
-    TextView knowledgeVos;
+    @BindView(R.id.btn_readme)
+    Button btn_readme;
+    @BindView(R.id.readme)
+    TextView readme;
 
     static Question info;
     private View mView;
@@ -60,10 +67,31 @@ public class SQuestionFragment extends BaseBackFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_question_info, container, false);
+        mView = inflater.inflate(R.layout.fragment_student_question, container, false);
         ButterKnife.bind(this,mView);
         initView();
         return attachToSwipeBack(mView);
+    }
+
+    @OnClick(R.id.btn_readme)
+    public void read(View view) {
+        CourseService.getInstance().getReadme(info.getAssignmentId(),info.getId())
+                .subscribe(new Subscriber<Readme>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Readme r) {
+                        readme.setText(r.getContent());
+                    }
+                });
     }
 
     private void initView() {
@@ -76,7 +104,6 @@ public class SQuestionFragment extends BaseBackFragment {
         type.setText(info.getType());
         creator.setText(info.getCreator().getName());
         duration.setText(String.valueOf(info.getDuration()));
-        knowledgeVos.setText(info.getKnowledgeVos());
     }
 
     @Override

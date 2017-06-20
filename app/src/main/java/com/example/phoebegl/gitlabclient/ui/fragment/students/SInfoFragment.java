@@ -70,7 +70,7 @@ public class SInfoFragment extends BaseMainFragment {
         }
         mToolbar.setTitle("个人信息");
         username.setText(MyApp.getCurrentUser().getName());
-        number.setText("学号："+MyApp.getCurrentUser().getNumber());
+        number.setText("学号："+MyApp.getCurrentUser().getId());
         email.setText("邮箱："+MyApp.getCurrentUser().getEmail());
         git.setText("Git用户名："+MyApp.getCurrentUser().getGitUsername());
         if(MyApp.getCurrentUser().getGender().equals("male"))

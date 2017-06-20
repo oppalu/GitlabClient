@@ -18,6 +18,8 @@ public class Question {
     private int link;
     private String knowledgeVos;
 
+    private int assignmentId;
+
     public int getId() {
         return id;
     }
@@ -96,5 +98,13 @@ public class Question {
 
     public void setKnowledgeVos(String knowledgeVos) {
         this.knowledgeVos = knowledgeVos;
+    }
+
+    public int getAssignmentId() {
+        return assignmentId;
+    }
+
+    public void setAssignmentId(int assignmentId) {
+        this.assignmentId = assignmentId;
     }
 }

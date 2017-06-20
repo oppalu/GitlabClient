@@ -3,6 +3,8 @@ package com.example.phoebegl.gitlabclient.data;
 import com.example.phoebegl.gitlabclient.MyApp;
 import com.example.phoebegl.gitlabclient.data.util.RetrofitWrapper;
 import com.example.phoebegl.gitlabclient.model.Exam;
+import com.example.phoebegl.gitlabclient.model.Readme;
+import com.example.phoebegl.gitlabclient.model.sore.Score;
 
 import java.util.List;
 
@@ -46,6 +48,21 @@ public class CourseService {
     public Observable<List<Exam>> getExercises(int courseId) {
         String token = MyApp.getToken();
         return service.getExercise(token,courseId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Observable<Readme> getReadme(int assignmentId,int questionId) {
+        String token = MyApp.getToken();
+        int studentId = MyApp.getCurrentUser().getId();
+        return service.getReadme(token,assignmentId,227,questionId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Observable<Score> getScore(int assignmentId){
+        String token = MyApp.getToken();
+        return service.getScores(token,assignmentId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.phoebegl.gitlabclient.R;
@@ -26,6 +27,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by phoebegl on 2017/6/18.
@@ -47,6 +49,8 @@ public class ExaminfoFragment extends BaseBackFragment{
     TextView examtime;
     @BindView(R.id.exam_status)
     TextView status;
+    @BindView(R.id.btn_analyse)
+    Button analyse;
 
     static Exam info;
     private QuestionAdapter adapter;
@@ -74,6 +78,11 @@ public class ExaminfoFragment extends BaseBackFragment{
         ButterKnife.bind(this,mView);
         initView();
         return attachToSwipeBack(mView);
+    }
+
+    @OnClick(R.id.btn_analyse)
+    public void analyse() {
+        EventBus.getDefault().post(new StartBrotherEvent(ScoreFragment.newInstance(info.getId())));
     }
 
     private void initView() {

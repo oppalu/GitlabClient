@@ -6,10 +6,12 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.phoebegl.gitlabclient.MyApp;
 import com.example.phoebegl.gitlabclient.R;
 import com.example.phoebegl.gitlabclient.data.CourseService;
 import com.example.phoebegl.gitlabclient.model.Exam;
@@ -82,6 +84,7 @@ public class THomeworkFragment extends BaseMainFragment implements SwipeRefreshL
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position, View view, RecyclerView.ViewHolder vh) {
+                Log.i("examid",String.valueOf(adapter.getExam(position).getId()));
                 EventBus.getDefault().post(new StartBrotherEvent(ExaminfoFragment.newInstance(adapter.getExam(position))));
             }
         });
@@ -102,7 +105,7 @@ public class THomeworkFragment extends BaseMainFragment implements SwipeRefreshL
     }
 
     public void initData() {
-        CourseService.getInstance().getHomeworks(1)
+        CourseService.getInstance().getHomeworks(MyApp.getCourseId())
                 .subscribe(new Subscriber<List<Exam>>() {
                     @Override
                     public void onCompleted() {

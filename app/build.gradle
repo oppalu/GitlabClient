@@ -52,4 +52,6 @@ dependencies {
     compile 'com.github.dmytrodanylyk.android-process-button:library:1.0.4'
     // EventBus
     compile 'org.greenrobot:eventbus:3.0.0'
+    //图表框架
+    compile 'com.github.lecho:hellocharts-library:1.5.8@aar'
 }

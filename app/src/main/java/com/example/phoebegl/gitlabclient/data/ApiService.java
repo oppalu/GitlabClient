@@ -3,6 +3,8 @@ package com.example.phoebegl.gitlabclient.data;
 import com.example.phoebegl.gitlabclient.model.Account;
 import com.example.phoebegl.gitlabclient.model.Exam;
 import com.example.phoebegl.gitlabclient.model.Group;
+import com.example.phoebegl.gitlabclient.model.Readme;
+import com.example.phoebegl.gitlabclient.model.sore.Score;
 import com.example.phoebegl.gitlabclient.model.UserInfo;
 
 import java.util.List;
@@ -37,4 +39,13 @@ public interface ApiService {
 
     @GET("course/{courseId}/exercise")
     Observable<List<Exam>> getExercise(@Header("Authorization") String token, @Path("courseId") int courseId);
+
+    @GET("assignment/{assignmentID}/student/{studentID}/question/{questionID}")
+    Observable<Readme> getReadme(@Header("Authorization") String token,
+                                 @Path("assignmentID") int assignmentID,
+                                 @Path("studentID") int studentID,
+                                 @Path("questionID") int questionID);
+
+    @GET("assignment/{assignmentId}/score")
+    Observable<Score> getScores(@Header("Authorization") String token,@Path("assignmentId") int assignmentID);
 }

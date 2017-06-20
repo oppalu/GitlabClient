@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.phoebegl.gitlabclient.MyApp;
 import com.example.phoebegl.gitlabclient.R;
 import com.example.phoebegl.gitlabclient.data.CourseService;
 import com.example.phoebegl.gitlabclient.model.Exam;
@@ -102,7 +103,7 @@ public class ExamFragment extends BaseMainFragment implements SwipeRefreshLayout
     }
 
     public void initData() {
-        CourseService.getInstance().getExams(1)
+        CourseService.getInstance().getExams(MyApp.getCourseId())
                 .subscribe(new Subscriber<List<Exam>>() {
                     @Override
                     public void onCompleted() {
