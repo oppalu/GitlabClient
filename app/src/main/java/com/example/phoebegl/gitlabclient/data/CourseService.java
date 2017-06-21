@@ -62,7 +62,8 @@ public class CourseService {
 
     public Observable<Score> getScore(int assignmentId){
         String token = MyApp.getToken();
-        return service.getScores(token,assignmentId)
+        //居然有数据的不在列表里sb
+        return service.getScores(token,93)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

@@ -1,9 +1,9 @@
 package com.example.phoebegl.gitlabclient.ui.fragment.teachers;
 
 import android.os.Bundle;
+import android.support.annotation.IntegerRes;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +20,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import lecho.lib.hellocharts.formatter.ColumnChartValueFormatter;
-import lecho.lib.hellocharts.formatter.SimpleColumnChartValueFormatter;
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.AxisValue;
 import lecho.lib.hellocharts.model.Column;
@@ -48,7 +46,9 @@ public class ScoreFragment extends BaseBackFragment {
 
     private static String[] ranks = new String[]
             {"不及格(0~60)","及格(61~70)","中等(71~80)","良好(81~90)","优秀(91~100)"};
-    private static int[] scores = new int[]{0,0,0,0,0};
+    int a=0,b=0,c=0,d=0,e=0;
+    private int[] scores = new int[5];
+
     public List<studentScore> list = new ArrayList<>();
 
     public static ScoreFragment newInstance(int id) {
@@ -87,19 +87,22 @@ public class ScoreFragment extends BaseBackFragment {
                     @Override
                     public void onCompleted() {
                         for(studentScore s : list) {
-                            Log.i("scores",String.valueOf(s.getScore()));
                             if(s.getScore()>=0 && s.getScore()<=60)
-                                scores[0] = scores[0]++;
+                                a++;
                             if(s.getScore()>=61 && s.getScore()<=70)
-                                scores[1] = scores[1]++;
+                                b++;
                             if(s.getScore()>=71 && s.getScore()<=80)
-                                scores[2] = scores[2]++;
+                                c++;
                             if(s.getScore()>=81 && s.getScore()<=90)
-                                scores[3] = scores[3]++;
+                                d++;
                             if(s.getScore()>=91 && s.getScore()<=100)
-                                scores[4] = scores[4]++;
+                                e++;
                         }
-                        
+                        scores[0] = a;
+                        scores[1] = b;
+                        scores[2] = c;
+                        scores[3] = d;
+                        scores[4] = e;
                         setChart();
                     }
 
@@ -119,25 +122,25 @@ public class ScoreFragment extends BaseBackFragment {
     }
 
     public void setChart() {
-        int numSubcolumns = 1;
+//        int numSubcolumns = 1;
         int numColumns = 5;
         List<Column> columns = new ArrayList<>();
         List<SubcolumnValue> values;
+        ArrayList<AxisValue> axisValuesX = new ArrayList<AxisValue>();
         for (int i = 0; i < numColumns; ++i) {
             values = new ArrayList<>();
-            for (int j = 0; j < numSubcolumns; ++j) {
-                values.add(new SubcolumnValue((float) scores[i], ChartUtils.pickColor()));
-            }
+            values.add(new SubcolumnValue((float) scores[i], ChartUtils.pickColor()));
             Column column = new Column(values);
             column.setHasLabels(true);
             columns.add(column);
+            axisValuesX.add(new AxisValue(i).setValue(i).setLabel(ranks[i]));
         }
-
 
         data = new ColumnChartData(columns);
 
         Axis axisX = new Axis();
         Axis axisY = new Axis().setHasLines(true);
+        axisX.setValues(axisValuesX);
         axisX.setName("成绩分布");
         axisY.setName("人数");
         data.setAxisXBottom(axisX);
