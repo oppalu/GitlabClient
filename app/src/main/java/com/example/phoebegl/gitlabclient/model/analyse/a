@@ -1,0 +1,100 @@
+{
+    "studentId": 256,
+    "assignmentId": 38,
+    "questionResults": [
+        {
+            "questionId": 12,
+            "questionTitle": "Examination-01.git",
+            "metricData": {
+                "git_url": "http://219.219.113.227:10080/151250185/Examination-01.git",
+                "measured": true,
+                "total_line_count": 17,
+                "comment_line_count": 2,
+                "field_count": 0,
+                "method_count": 2,
+                "max_coc": 2
+            },
+            "testResult": {
+                "git_url": "http://219.219.113.227:10080/151250185/Examination-01.git",
+                "compile_succeeded": true,
+                "tested": true,
+                "testcases": [
+                    {
+                        "name": "test1",
+                        "passed": false
+                    }
+                ]
+            },
+            "scoreResult": {
+                "git_url": "http://219.219.113.227:10080/151250185/Examination-01.git",
+                "score": 0,
+                "scored": true
+            }
+        },
+        {
+            "questionId": 13,
+            "questionTitle": "Examination-02.git",
+            "metricData": {
+                "git_url": "http://219.219.113.227:10080/151250185/Examination-02.git",
+                "measured": true,
+                "total_line_count": 55,
+                "comment_line_count": 6,
+                "field_count": 0,
+                "method_count": 2,
+                "max_coc": 8
+            },
+            "testResult": {
+                "git_url": "http://219.219.113.227:10080/151250185/Examination-02.git",
+                "compile_succeeded": true,
+                "tested": true,
+                "testcases": [
+                    {
+                        "name": "test10",
+                        "passed": false
+                    },
+                    {
+                        "name": "test1",
+                        "passed": false
+                    },
+                    {
+                        "name": "test2",
+                        "passed": false
+                    },
+                    {
+                        "name": "test3",
+                        "passed": false
+                    },
+                    {
+                        "name": "test4",
+                        "passed": false
+                    },
+                    {
+                        "name": "test5",
+                        "passed": false
+                    },
+                    {
+                        "name": "test6",
+                        "passed": false
+                    },
+                    {
+                        "name": "test7",
+                        "passed": false
+                    },
+                    {
+                        "name": "test8",
+                        "passed": false
+                    },
+                    {
+                        "name": "test9",
+                        "passed": false
+                    }
+                ]
+            },
+            "scoreResult": {
+                "git_url": "http://219.219.113.227:10080/151250185/Examination-02.git",
+                "score": 0,
+                "scored": true
+            }
+        }
+    ]
+}

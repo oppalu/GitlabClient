@@ -1,14 +1,18 @@
 package com.example.phoebegl.gitlabclient.data;
 
+import android.util.Log;
+
 import com.example.phoebegl.gitlabclient.MyApp;
 import com.example.phoebegl.gitlabclient.data.util.RetrofitWrapper;
 import com.example.phoebegl.gitlabclient.model.Exam;
 import com.example.phoebegl.gitlabclient.model.Readme;
+import com.example.phoebegl.gitlabclient.model.analyse.Analyse;
 import com.example.phoebegl.gitlabclient.model.sore.Score;
 
 import java.util.List;
 
 import rx.Observable;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -67,4 +71,12 @@ public class CourseService {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
+    public Observable<Analyse> getAnalyse() {
+        String token = MyApp.getToken();
+        return service.getAnalyse(token)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
 }

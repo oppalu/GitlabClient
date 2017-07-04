@@ -1,0 +1,56 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/question_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="问题名称："
+        android:textColor="@android:color/black"
+        style="?android:listSeparatorTextViewStyle"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:text="定量数据："
+        style="?android:listSeparatorTextViewStyle"/>
+    <TextView
+        android:id="@+id/metric"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="定量数据"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+
+    <TextView
+        android:id="@+id/compile_succeeded"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:text="测试结果："
+        style="?android:listSeparatorTextViewStyle"/>
+    <TextView
+        android:id="@+id/testcase"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="测试用例情况"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+
+    <TextView
+        android:id="@+id/score"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:text="成绩："
+        style="?android:listSeparatorTextViewStyle"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp"
+        android:layout_alignParentBottom="true"
+        android:background="#c9c9c9"/>
+</LinearLayout>

@@ -4,6 +4,7 @@ import com.example.phoebegl.gitlabclient.model.Account;
 import com.example.phoebegl.gitlabclient.model.Exam;
 import com.example.phoebegl.gitlabclient.model.Group;
 import com.example.phoebegl.gitlabclient.model.Readme;
+import com.example.phoebegl.gitlabclient.model.analyse.Analyse;
 import com.example.phoebegl.gitlabclient.model.sore.Score;
 import com.example.phoebegl.gitlabclient.model.UserInfo;
 
@@ -48,4 +49,12 @@ public interface ApiService {
 
     @GET("assignment/{assignmentId}/score")
     Observable<Score> getScores(@Header("Authorization") String token,@Path("assignmentId") int assignmentID);
+
+    @GET("assignment/{assignmentId}/student/{studentId}/analysis")
+    Observable<Analyse> getAnalyse(@Header("Authorization") String token,
+                                   @Path("assignmentId") int assignmentID,
+                                   @Path("studentId") int studentID);
+
+    @GET("assignment/38/student/256/analysis")
+    Observable<Analyse> getAnalyse(@Header("Authorization") String token);
 }

@@ -10,17 +10,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.phoebegl.gitlabclient.MyApp;
 import com.example.phoebegl.gitlabclient.R;
+import com.example.phoebegl.gitlabclient.data.CourseService;
 import com.example.phoebegl.gitlabclient.model.Exam;
 import com.example.phoebegl.gitlabclient.model.Question;
 import com.example.phoebegl.gitlabclient.model.Status;
+import com.example.phoebegl.gitlabclient.model.analyse.Analyse;
 import com.example.phoebegl.gitlabclient.ui.adapter.QuestionAdapter;
 import com.example.phoebegl.gitlabclient.ui.base.BaseBackFragment;
 import com.example.phoebegl.gitlabclient.ui.event.StartBrotherEvent;
 import com.example.phoebegl.gitlabclient.ui.fragment.teachers.QuestioninfoFragment;
+import com.example.phoebegl.gitlabclient.ui.fragment.teachers.ScoreFragment;
 import com.example.phoebegl.gitlabclient.ui.listener.OnItemClickListener;
 
 import org.greenrobot.eventbus.EventBus;
@@ -29,6 +33,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import rx.Subscriber;
 
 /**
  * Created by phoebegl on 2017/6/18.
@@ -50,6 +56,8 @@ public class SExaminfoFragment extends BaseBackFragment {
     TextView examtime;
     @BindView(R.id.exam_status)
     TextView status;
+    @BindView(R.id.btn_anal)
+    Button analyse;
 
     static Exam info;
     private QuestionAdapter adapter;
@@ -112,6 +120,27 @@ public class SExaminfoFragment extends BaseBackFragment {
             }
         });
         initData();
+    }
+
+    @OnClick(R.id.btn_anal)
+    public void anal() {
+        CourseService.getInstance().getAnalyse()
+                .subscribe(new Subscriber<Analyse>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Analyse analyse) {
+                        EventBus.getDefault().post(new StartBrotherEvent(AnalyseFragment.newInstance(analyse)));
+                    }
+                });
     }
 
     public void initData() {
